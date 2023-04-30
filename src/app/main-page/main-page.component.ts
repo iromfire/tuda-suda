@@ -1,73 +1,22 @@
 import { Component } from '@angular/core';
-import {YaReadyEvent} from "angular8-yandex-maps";
 
-
-const DELIVERY_TARIFF = 25;
-const MINIMUM_COST = 1000;
 @Component({
   selector: 'app-main-page',
   templateUrl: './main-page.component.html',
   styleUrls: ['./main-page.component.scss']
 })
 export class MainPageComponent {
-  total!: number;
-
-  routePanelParameters: ymaps.control.IRoutePanelParameters = {
-    options: {
-      showHeader: true,
-      title: 'Расчёт доставки',
-    },
-  };
-
-  zoomControlParameters: ymaps.control.IZoomControlParameters = {
-    options: {
-      size: 'small',
-      position: {
-        bottom: 145,
-        right: 10,
-      },
-    },
-  };
-
-  onRoutePanelReady(event: YaReadyEvent<ymaps.control.RoutePanel>): void {
-    const { routePanel } = event.target;
-
-    routePanel.options.set({
-      types: { auto: true },
-    });
-
-    // Получим ссылку на маршрут.
-    routePanel.getRouteAsync().then((route: any) => {
-      // Зададим максимально допустимое число маршрутов, возвращаемых мультимаршрутизатором.
-      route.model.setParams({ results: 1 }, true);
-
-      // Повесим обработчик на событие построения маршрута.
-      route.model.events.add('requestsuccess', () => {
-        const activeRoute = route.getActiveRoute();
-
-        if (activeRoute) {
-          // Получим протяженность маршрута.
-          const length = route.getActiveRoute().properties.get('distance');
-          // Вычислим стоимость доставки.
-          this.total = this.calculate(Math.round(length.value / 1000));
-          // Создадим макет содержимого балуна маршрута.
-          const balloonContentLayout = event.ymaps.templateLayoutFactory
-            .createClass(`
-              <span>Расстояние: ${length.text}.</span><br/>
-              <span style="font-weight: bold; font-style: italic">Стоимость доставки: ${this.total} р.</span>
-            `);
-
-          // Зададим этот макет для содержимого балуна.
-          route.options.set('routeBalloonContentLayout', balloonContentLayout);
-          // Откроем балун.
-          activeRoute.balloon.open();
-        }
-      });
-    });
+  form = {
+    total: 0,
+    date: new Date(),
+    number: '',
+    comment: '',
+    to: '',
+    from: '',
+    name: '',
   }
 
-  // Функция, вычисляющая стоимость доставки.
-  public calculate(routeLength: number): number {
-    return Math.max(routeLength * DELIVERY_TARIFF, MINIMUM_COST);
-  }
+  // submit() {
+  //   this.api.createOrder(this.form);
+  // }
 }

@@ -9,15 +9,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DatepickerComponent } from './material-components/datepicker/datepicker.component';
 import {MatInputModule} from "@angular/material/input";
 import {MatDatepickerModule} from "@angular/material/datepicker";
-import {MatNativeDateModule} from '@angular/material/core';
+import {MAT_DATE_LOCALE, MatNativeDateModule} from '@angular/material/core';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { OrderPageComponent } from './order-page/order-page.component';
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import {NgOptimizedImage} from "@angular/common";
+import {OrderFormComponent} from "./main-page/components/order-form/order-form.component";
+import {MainFormComponent} from "./main-page/components/main-form/main-form.component";
+import {MapFormComponent} from "./main-page/components/map-form/map-form.component";
 
 
 const mapConfig: YaConfig = {
@@ -32,6 +35,9 @@ const mapConfig: YaConfig = {
     OrderPageComponent,
     NotFoundPageComponent,
     MainPageComponent,
+    OrderFormComponent,
+    MainFormComponent,
+    MapFormComponent
   ],
   imports: [
     BrowserModule,
@@ -45,9 +51,10 @@ const mapConfig: YaConfig = {
     MatIconModule,
     MatButtonModule,
     FormsModule,
-    NgOptimizedImage
+    NgOptimizedImage,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'ru-RU' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

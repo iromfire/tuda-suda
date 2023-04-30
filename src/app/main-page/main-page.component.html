@@ -1,0 +1,53 @@
+<nav>
+  <h2>туда-сюда</h2>
+</nav>
+
+<div class="wrapper">
+
+  <div class="column">
+    <h2 class="title">Введите адрес доставки</h2>
+
+
+    <div class="map-container">
+      <ya-map [center]="[55.7870206868458,49.123043554524386]" [state]="{ controls: [] }">
+        <ya-control
+          type="RoutePanel"
+          [parameters]="routePanelParameters"
+          (ready)="onRoutePanelReady($event)"
+        ></ya-control>
+
+        <ya-control
+          type="ZoomControl"
+          [parameters]="zoomControlParameters"
+        ></ya-control>
+      </ya-map>
+    </div>
+  </div>
+
+  <div class="column">
+    <h2>Выберите дату</h2>
+    <app-datepicker></app-datepicker>
+
+    <h2>Введите имя</h2>
+    <mat-form-field class="mat-form">
+      <input matInput type="text" placeholder="Введите имя">
+    </mat-form-field>
+
+    <h2>Введите номер телефона</h2>
+    <mat-form-field class="mat-form">
+      <input matInput type="number" placeholder="Введите номер телефона">
+    </mat-form-field>
+
+    <h2>Комментарий</h2>
+    <mat-form-field class="mat-form">
+      <textarea matInput placeholder="Введите комментарий"></textarea>
+    </mat-form-field>
+  </div>
+
+  <div class="column">
+    <h2>Итого: {{total}}</h2>
+    <button mat-raised-button color="accent" routerLink="/order">Оформить заказ</button>
+  </div>
+</div>
+
+

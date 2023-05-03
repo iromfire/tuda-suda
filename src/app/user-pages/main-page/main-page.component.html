@@ -1,0 +1,19 @@
+
+<div class="wrapper">
+
+  <div class="column">
+    <app-map-form (totalChange)="getTotal($event)"></app-map-form>
+  </div>
+
+  <div class="column">
+    <app-main-form (onChange)="getOrderForm($event)">  </app-main-form>
+  </div>
+
+  <div class="column">
+    <h2>Итого: {{total}}</h2>
+    <button mat-raised-button color="accent" (click)="submit()">Оформить заказ</button>
+    <p *ngIf="errorExist">Заполните все поля</p>
+  </div>
+</div>
+
+

@@ -1,0 +1,24 @@
+<div [formGroup]="formGroup">
+  <h2>Выберите дату</h2>
+  <mat-form-field [lang]="'RU'" appearance="fill" class="mat-form">
+    <mat-label>Выберите дату</mat-label>
+    <input formControlName="date" matInput [matDatepicker]="picker">
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <h2>Введите имя</h2>
+  <mat-form-field class="mat-form">
+    <input type="text" formControlName="clientName" matInput  placeholder="Введите имя">
+  </mat-form-field>
+
+  <h2>Введите номер телефона</h2>
+  <mat-form-field class="mat-form">
+    <input formControlName="phoneNumber" matInput type="text" placeholder="Введите номер телефона" prefix="+7" mask='(000) 000-00-00'>
+  </mat-form-field>
+
+  <h2>Комментарий</h2>
+  <mat-form-field class="mat-form">
+    <textarea formControlName="comment" matInput placeholder="Введите комментарий"></textarea>
+  </mat-form-field>
+</div>

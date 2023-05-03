@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -6,22 +6,28 @@ import { AppComponent } from './app.component';
 
 import { AngularYandexMapsModule, YaConfig } from 'angular8-yandex-maps';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DatepickerComponent } from './material-components/datepicker/datepicker.component';
-import {MatInputModule} from "@angular/material/input";
-import {MatDatepickerModule} from "@angular/material/datepicker";
-import {MAT_DATE_LOCALE, MatNativeDateModule} from '@angular/material/core';
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatIconModule} from "@angular/material/icon";
-import {MatButtonModule} from "@angular/material/button";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import { OrderPageComponent } from './order-page/order-page.component';
-import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
-import { MainPageComponent } from './main-page/main-page.component';
-import {NgOptimizedImage} from "@angular/common";
-import {OrderFormComponent} from "./main-page/components/order-form/order-form.component";
-import {MainFormComponent} from "./main-page/components/main-form/main-form.component";
-import {MapFormComponent} from "./main-page/components/map-form/map-form.component";
 
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { OrderPageComponent } from './user-pages/order-page/order-page.component';
+import { NotFoundPageComponent } from './user-pages/not-found-page/not-found-page.component';
+import { MainPageComponent } from './user-pages/main-page/main-page.component';
+import { NgOptimizedImage } from '@angular/common';
+import { MainFormComponent } from './user-pages/main-page/components/main-form/main-form.component';
+import { MapFormComponent } from './user-pages/main-page/components/map-form/map-form.component';
+import { HttpClientModule } from '@angular/common/http';
+import { ListOrdersPageComponent } from './admin-pages/list-orders-page/list-orders-page.component';
+import { MatTableModule } from '@angular/material/table';
+import { registerLocaleData } from '@angular/common';
+import localeRu from '@angular/common/locales/ru';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+
+registerLocaleData(localeRu, 'ru');
 
 const mapConfig: YaConfig = {
   apikey: 'd9372196-27a2-4ae5-a99b-d4cc91c95fd5',
@@ -31,13 +37,12 @@ const mapConfig: YaConfig = {
 @NgModule({
   declarations: [
     AppComponent,
-    DatepickerComponent,
     OrderPageComponent,
     NotFoundPageComponent,
     MainPageComponent,
-    OrderFormComponent,
     MainFormComponent,
-    MapFormComponent
+    MapFormComponent,
+    ListOrdersPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,9 +57,18 @@ const mapConfig: YaConfig = {
     MatButtonModule,
     FormsModule,
     NgOptimizedImage,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
+    MatTableModule,
+    NgxMaskDirective,
+    NgxMaskPipe,
   ],
-  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'ru-RU' }],
-  bootstrap: [AppComponent]
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'ru-RU' },
+    { provide: LOCALE_ID, useValue: 'ru' },
+    [provideNgxMask()],
+  ],
+
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -4,6 +4,7 @@ import { v4 as generateID } from 'uuid';
 import { firebaseConfig } from '../../../environments/environment';
 import { OrderForm } from '../../../interfaces/interfaces';
 import { Router } from '@angular/router';
+import { Time } from '@angular/common';
 
 @Component({
   selector: 'app-main-page',
@@ -20,11 +21,13 @@ export class MainPageComponent {
   phoneNumber!: string;
   comment!: string;
   total!: number;
+  time!: Time;
 
   errorExist = false;
 
   getOrderForm(data: OrderForm) {
     this.date = data.date;
+    this.time = data.time;
     this.clientName = data.clientName;
     this.phoneNumber = data.phoneNumber;
     this.comment = data.comment;
@@ -37,6 +40,7 @@ export class MainPageComponent {
   checkForm() {
     return !!(
       this.date &&
+      this.time &&
       this.clientName &&
       this.phoneNumber &&
       this.comment &&
@@ -48,10 +52,11 @@ export class MainPageComponent {
     if (this.checkForm()) {
       const uniqueId = generateID();
       const order = {
-        id: uniqueId,
+        orderNumber: uniqueId,
         from: 'point1',
         to: 'point2',
         date: this.date,
+        time: this.time,
         clientName: this.clientName,
         phoneNumber: this.phoneNumber,
         comment: this.comment,

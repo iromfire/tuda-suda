@@ -1,3 +1,7 @@
 .mat-form {
   width: 300px;
 }
+
+textarea{
+  height: 12px;
+}

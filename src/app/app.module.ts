@@ -26,6 +26,7 @@ import { MatTableModule } from '@angular/material/table';
 import { registerLocaleData } from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { AboutPageComponent } from './user-pages/about-page/about-page.component';
 
 registerLocaleData(localeRu, 'ru');
 
@@ -43,6 +44,7 @@ const mapConfig: YaConfig = {
     MainFormComponent,
     MapFormComponent,
     ListOrdersPageComponent,
+    AboutPageComponent,
   ],
   imports: [
     BrowserModule,

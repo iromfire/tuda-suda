@@ -4,10 +4,12 @@ import { OrderPageComponent } from './user-pages/order-page/order-page.component
 import { NotFoundPageComponent } from './user-pages/not-found-page/not-found-page.component';
 import { MainPageComponent } from './user-pages/main-page/main-page.component';
 import { ListOrdersPageComponent } from './admin-pages/list-orders-page/list-orders-page.component';
+import { AboutPageComponent } from './user-pages/about-page/about-page.component';
 
 const routes: Routes = [
   { path: '', component: MainPageComponent },
   { path: 'success_order', component: OrderPageComponent },
+  { path: 'about', component: AboutPageComponent },
   { path: 'admin/orders', component: ListOrdersPageComponent },
   { path: '**', component: NotFoundPageComponent },
 ];

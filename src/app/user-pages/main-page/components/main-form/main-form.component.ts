@@ -14,6 +14,7 @@ export class MainFormComponent {
   constructor(private builder: FormBuilder) {
     this.formGroup = builder.group({
       date: ['', [Validators.required]],
+      time: ['', Validators.required],
       clientName: ['', [Validators.required]],
       phoneNumber: ['', [Validators.required]],
       comment: ['', [Validators.required]],

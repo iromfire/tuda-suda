@@ -17,9 +17,11 @@ export class ListOrdersPageComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = [
     'id',
     'date',
+    'time',
     'clientName',
     'phoneNumber',
     'comment',
+    'delete',
   ];
 
   constructor(private http: HttpClient) {}
@@ -40,6 +42,14 @@ export class ListOrdersPageComponent implements OnInit, OnDestroy {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  public deleteOrder(id: string) {
+    this.http
+      .delete(`${firebaseConfig.databaseURL}/orders/${id}.json`)
+      .subscribe(() => {
+        this.orders = this.orders.filter((orders) => orders.id != id);
+      });
+  }
+
   private getOrders() {
     return this.http.get(`${firebaseConfig.databaseURL}/orders.json`).pipe(
       map((res: any) => {
@@ -47,6 +57,7 @@ export class ListOrdersPageComponent implements OnInit, OnDestroy {
           (key) =>
             ({
               ...res[key],
+              id: key,
             } as Order)
         );
       })

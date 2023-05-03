@@ -1,5 +1,10 @@
 <nav>
   <h2 [routerLink]="'/'">туда-сюда</h2>
+  <ul>
+    <li routerLinkActive="active">
+      <a [routerLink]="['/about']">О сервисе</a>
+    </li>
+  </ul>
 </nav>
 
 <router-outlet></router-outlet>

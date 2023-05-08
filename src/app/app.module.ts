@@ -27,6 +27,12 @@ import { registerLocaleData } from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { AboutPageComponent } from './user-pages/about-page/about-page.component';
+import { LoginPageComponent } from './admin-pages/login-page/login-page.component';
+import { AuthService } from './auth.service';
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { environment } from '../environments/environment';
+
+import { AngularFireAuthGuardModule } from '@angular/fire/compat/auth-guard';
 
 registerLocaleData(localeRu, 'ru');
 
@@ -45,6 +51,7 @@ const mapConfig: YaConfig = {
     MapFormComponent,
     ListOrdersPageComponent,
     AboutPageComponent,
+    LoginPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -64,13 +71,15 @@ const mapConfig: YaConfig = {
     MatTableModule,
     NgxMaskDirective,
     NgxMaskPipe,
+    AngularFireAuthGuardModule,
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'ru-RU' },
     { provide: LOCALE_ID, useValue: 'ru' },
+    { provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig },
     [provideNgxMask()],
+    [AuthService],
   ],
-
   bootstrap: [AppComponent],
 })
 export class AppModule {}

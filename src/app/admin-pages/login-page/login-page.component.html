@@ -1,0 +1,16 @@
+<div [formGroup]="form" class="wrapper">
+
+  <h2>Введите логин</h2>
+  <mat-form-field class="mat-form">
+    <input type="email" formControlName="email" name="email" matInput placeholder="Введите логин">
+  </mat-form-field>
+
+  <h2>Введите пароль</h2>
+  <mat-form-field class="mat-form">
+    <input type="password" formControlName="password" name="password" matInput placeholder="Введите логин">
+  </mat-form-field>
+
+  <div>
+    <button mat-raised-button color="primary" (click)="login()">Войти</button>
+  </div>
+</div>

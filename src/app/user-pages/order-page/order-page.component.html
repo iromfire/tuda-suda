@@ -1,4 +1,9 @@
-<div>
+<div *ngIf="order">
   <h1>Заказ успешно оформлен</h1>
+  <div class="order-info">
+    <p>Номер заказа: {{order.orderNumber}}</p>
+    <p>Дата: {{order.date | date}}</p>
+    <p>Время {{order.time}}</p>
+  </div>
 </div>
 

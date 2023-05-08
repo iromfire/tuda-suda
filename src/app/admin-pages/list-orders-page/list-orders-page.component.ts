@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { firebaseConfig } from '../../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { map, Subscription } from 'rxjs';
 import { Order } from '../../../interfaces/interfaces';
 import { MatTableDataSource } from '@angular/material/table';
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-list-orders-page',
@@ -24,7 +25,11 @@ export class ListOrdersPageComponent implements OnInit, OnDestroy {
     'delete',
   ];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private auth: AuthService) {}
+
+  protected out() {
+    this.auth.logout();
+  }
 
   ngOnInit() {
     this.subscribe = this.getOrders().subscribe((orders) => {
@@ -44,23 +49,25 @@ export class ListOrdersPageComponent implements OnInit, OnDestroy {
 
   public deleteOrder(id: string) {
     this.http
-      .delete(`${firebaseConfig.databaseURL}/orders/${id}.json`)
+      .delete(`${environment.firebaseConfig.databaseURL}/orders/${id}.json`)
       .subscribe(() => {
         this.orders = this.orders.filter((orders) => orders.id != id);
       });
   }
 
   private getOrders() {
-    return this.http.get(`${firebaseConfig.databaseURL}/orders.json`).pipe(
-      map((res: any) => {
-        return Object.keys(res).map(
-          (key) =>
-            ({
-              ...res[key],
-              id: key,
-            } as Order)
-        );
-      })
-    );
+    return this.http
+      .get(`${environment.firebaseConfig.databaseURL}/orders.json`)
+      .pipe(
+        map((res: any) => {
+          return Object.keys(res).map(
+            (key) =>
+              ({
+                ...res[key],
+                id: key,
+              } as Order)
+          );
+        })
+      );
   }
 }

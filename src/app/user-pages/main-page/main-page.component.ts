@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { v4 as generateID } from 'uuid';
-import { firebaseConfig } from '../../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { OrderForm } from '../../../interfaces/interfaces';
 import { Router } from '@angular/router';
 import { Time } from '@angular/common';
@@ -43,7 +43,6 @@ export class MainPageComponent {
       this.time &&
       this.clientName &&
       this.phoneNumber &&
-      this.comment &&
       this.total
     );
   }
@@ -62,10 +61,11 @@ export class MainPageComponent {
         comment: this.comment,
         total: this.total,
       };
+
       this.http
-        .post(`${firebaseConfig.databaseURL}/orders.json`, order)
+        .post(`${environment.firebaseConfig.databaseURL}/orders.json`, order)
         .subscribe(() => {
-          this.router.navigate(['/success_order']).then();
+          this.router.navigateByUrl('/success_order', { state: order }).then();
         });
     } else {
       this.errorExist = true;

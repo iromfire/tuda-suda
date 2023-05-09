@@ -14,6 +14,9 @@ export class MapFormComponent {
   @Output()
   totalChange = new EventEmitter();
 
+  @Output()
+  addressChange = new EventEmitter();
+
   // Функция, вычисляющая стоимость доставки.
   public calculate(routeLength: number): number {
     return Math.max(routeLength * DELIVERY_TARIFF, MINIMUM_COST);
@@ -24,6 +27,7 @@ export class MapFormComponent {
       showHeader: true,
       title: 'Расчёт доставки',
     },
+    state: {},
   };
 
   zoomControlParameters: ymaps.control.IZoomControlParameters = {
@@ -53,6 +57,11 @@ export class MapFormComponent {
         const activeRoute = route.getActiveRoute();
 
         if (activeRoute) {
+          const wayPoints = route.model.getWayPoints();
+          const addresses = wayPoints.map((point: any) =>
+            point.properties.get('address')
+          );
+          this.addressChange.emit(addresses);
           // Получим протяженность маршрута.
           const length = route.getActiveRoute().properties.get('distance');
           // Вычислим стоимость доставки.

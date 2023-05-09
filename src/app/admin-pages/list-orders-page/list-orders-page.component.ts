@@ -17,6 +17,8 @@ export class ListOrdersPageComponent implements OnInit, OnDestroy {
   dataSource!: MatTableDataSource<Order>;
   displayedColumns: string[] = [
     'id',
+    'from',
+    'to',
     'date',
     'time',
     'clientName',

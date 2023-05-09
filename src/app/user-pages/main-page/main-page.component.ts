@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { v4 as generateID } from 'uuid';
 import { environment } from '../../../environments/environment';
@@ -12,6 +12,7 @@ import { Time } from '@angular/common';
   styleUrls: ['./main-page.component.scss'],
 })
 export class MainPageComponent {
+  @ViewChild('map') map!: ymaps.Map;
   constructor(private http: HttpClient, private router: Router) {}
 
   from!: string;
@@ -33,6 +34,10 @@ export class MainPageComponent {
     this.comment = data.comment;
   }
 
+  getAddresses(data: any) {
+    [this.from, this.to] = data;
+  }
+
   getTotal(total: number) {
     this.total = total;
   }
@@ -52,8 +57,8 @@ export class MainPageComponent {
       const uniqueId = generateID();
       const order = {
         orderNumber: uniqueId,
-        from: 'point1',
-        to: 'point2',
+        from: this.from,
+        to: this.to,
         date: this.date,
         time: this.time,
         clientName: this.clientName,

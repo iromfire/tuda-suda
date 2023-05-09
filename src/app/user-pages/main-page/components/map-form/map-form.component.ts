@@ -26,6 +26,7 @@ export class MapFormComponent {
     options: {
       showHeader: true,
       title: 'Расчёт доставки',
+      maxWidth: '300px',
     },
     state: {},
   };

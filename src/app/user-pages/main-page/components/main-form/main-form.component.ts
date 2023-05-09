@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-main-form',
@@ -11,13 +11,13 @@ export class MainFormComponent {
   onChange = new EventEmitter();
 
   formGroup: FormGroup;
-  constructor(private builder: FormBuilder) {
-    this.formGroup = builder.group({
-      date: ['', [Validators.required]],
-      time: ['', Validators.required],
-      clientName: ['', [Validators.required]],
-      phoneNumber: ['', [Validators.required]],
-      comment: ['', [Validators.required]],
+  constructor() {
+    this.formGroup = new FormGroup({
+      date: new FormControl('', [Validators.required]),
+      time: new FormControl('', Validators.required),
+      clientName: new FormControl('', [Validators.required]),
+      phoneNumber: new FormControl('', [Validators.required]),
+      comment: new FormControl('', [Validators.required]),
     });
     this.formGroup.valueChanges.subscribe((data) => this.onChange.emit(data));
   }

@@ -1,9 +1,21 @@
 <div *ngIf="order">
-  <h1>Заказ успешно оформлен</h1>
+  <h1>Заказ  успешно оформлен</h1>
+  <div>
+    <h3>№{{order.orderNumber}}</h3>
+  </div>
   <div class="order-info">
-    <p>Номер заказа: {{order.orderNumber}}</p>
-    <p>Дата: {{order.date | date}}</p>
-    <p>Время {{order.time}}</p>
+    <div class="column-1">
+      <p>Дата:</p>
+      <p>Откуда:</p>
+      <p>Куда:</p>
+      <p>Итого:</p>
+    </div>
+    <div class="column-2">
+      <p>{{order.time}}, {{order.date | date}}</p>
+      <p>{{order.from}}</p>
+      <p>{{order.to}}</p>
+      <p>{{order.total}}₽</p>
+    </div>
   </div>
 </div>
 

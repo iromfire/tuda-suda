@@ -6,14 +6,36 @@ div{
 
 h1 {
   font-size: 1.5rem;
+  padding: 0;
+  margin: 0;
+}
+
+h3{
+  //background: #5e35b1;
+  background: deepskyblue;
+  color: white;
+  padding: 1rem;
 }
 
 .order-info{
+  margin: 0;
   padding: 1rem;
-  outline: 1px solid;
+  display: flex;
+  float: left;
+  background: lightcyan;
 }
 
+.column-1 {
+  display: block;
+  width: 100px;
+}
+
+.column-2 {
+  display: block;
+}
+
+
 p {
-  margin: 0;
+  margin-bottom: .5rem;
   padding: 0;
 }

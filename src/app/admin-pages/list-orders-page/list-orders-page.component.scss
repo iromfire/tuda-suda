@@ -1,5 +1,5 @@
 .wrapper {
-  width: 1200px;
+  width: 99%;
   margin: 0 auto;
 }
 
@@ -11,8 +11,16 @@ table {
   font-size: 14px;
   width: 100%;
 }
+
 .out{
   margin-bottom: 1rem;
-  float: right;
+}
+
+.footer {
+  height: 50px;
+}
+
+.status-field{
+  width: 150px;
 }
 

@@ -1,4 +1,5 @@
 import { Time } from '@angular/common';
+import { OrderStatus } from '../enums/enums';
 
 export interface Order {
   id: string;
@@ -11,6 +12,7 @@ export interface Order {
   phoneNumber: string;
   comment: string;
   total: number;
+  status: OrderStatus;
 }
 
 export interface OrderForm {

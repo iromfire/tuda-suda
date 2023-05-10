@@ -28,11 +28,12 @@ import localeRu from '@angular/common/locales/ru';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { AboutPageComponent } from './user-pages/about-page/about-page.component';
 import { LoginPageComponent } from './admin-pages/login-page/login-page.component';
-import { AuthService } from './auth.service';
+import { AuthService } from './services/auth.service';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { environment } from '../environments/environment';
 
 import { AngularFireAuthGuardModule } from '@angular/fire/compat/auth-guard';
+import { MatSelectModule } from '@angular/material/select';
 
 registerLocaleData(localeRu, 'ru');
 
@@ -72,6 +73,7 @@ const mapConfig: YaConfig = {
     NgxMaskDirective,
     NgxMaskPipe,
     AngularFireAuthGuardModule,
+    MatSelectModule,
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'ru-RU' },

@@ -4,7 +4,9 @@ import { HttpClient } from '@angular/common/http';
 import { map, Subscription } from 'rxjs';
 import { Order } from '../../../interfaces/interfaces';
 import { MatTableDataSource } from '@angular/material/table';
-import { AuthService } from '../../auth.service';
+import { AuthService } from '../../services/auth.service';
+import { OrderStatus } from '../../../enums/enums';
+import { OrderService } from '../../services/order.service';
 
 @Component({
   selector: 'app-list-orders-page',
@@ -12,7 +14,10 @@ import { AuthService } from '../../auth.service';
   styleUrls: ['./list-orders-page.component.scss'],
 })
 export class ListOrdersPageComponent implements OnInit, OnDestroy {
+  orderStatuses = Object.values(OrderStatus);
+  orderStatus!: OrderStatus;
   orders: Order[] = [];
+  order!: Order;
   subscribe!: Subscription;
   dataSource!: MatTableDataSource<Order>;
   displayedColumns: string[] = [
@@ -20,18 +25,19 @@ export class ListOrdersPageComponent implements OnInit, OnDestroy {
     'from',
     'to',
     'date',
-    'time',
     'clientName',
     'phoneNumber',
     'comment',
+    'total',
+    'status',
     'delete',
   ];
 
-  constructor(private http: HttpClient, private auth: AuthService) {}
-
-  protected out() {
-    this.auth.logout();
-  }
+  constructor(
+    private http: HttpClient,
+    private auth: AuthService,
+    private orderServ: OrderService
+  ) {}
 
   ngOnInit() {
     this.subscribe = this.getOrders().subscribe((orders) => {
@@ -47,6 +53,18 @@ export class ListOrdersPageComponent implements OnInit, OnDestroy {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  protected out() {
+    this.auth.logout();
+  }
+
+  changeStatus(id: string, status: OrderStatus) {
+    this.orderStatus = status;
+    this.orderServ.updateOrderStatus(id, {
+      ...this.order,
+      status: this.orderStatus,
+    });
   }
 
   public deleteOrder(id: string) {

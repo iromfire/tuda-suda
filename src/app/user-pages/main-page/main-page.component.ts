@@ -5,6 +5,7 @@ import { environment } from '../../../environments/environment';
 import { OrderForm } from '../../../interfaces/interfaces';
 import { Router } from '@angular/router';
 import { Time } from '@angular/common';
+import { OrderStatus } from '../../../enums/enums';
 
 @Component({
   selector: 'app-main-page',
@@ -34,8 +35,8 @@ export class MainPageComponent {
     this.comment = data.comment;
   }
 
-  getAddresses(data: any) {
-    [this.from, this.to] = data;
+  getAddresses(addresses: any) {
+    [this.from, this.to] = addresses;
   }
 
   getTotal(total: number) {
@@ -65,6 +66,7 @@ export class MainPageComponent {
         phoneNumber: this.phoneNumber,
         comment: this.comment,
         total: this.total,
+        status: OrderStatus.inProcessing,
       };
 
       this.http

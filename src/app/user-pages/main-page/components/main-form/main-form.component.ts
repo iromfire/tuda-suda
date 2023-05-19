@@ -10,8 +10,17 @@ export class MainFormComponent {
   @Output()
   onChange = new EventEmitter();
 
+  minDate: Date;
+  minTime: string;
+
   formGroup: FormGroup;
   constructor() {
+    this.minDate = new Date();
+    this.minTime =
+      this.minDate.getHours().toString() +
+      ':' +
+      this.minDate.getMinutes().toString();
+    console.log(this.minTime);
     this.formGroup = new FormGroup({
       date: new FormControl('', [Validators.required]),
       time: new FormControl('', Validators.required),
@@ -20,5 +29,11 @@ export class MainFormComponent {
       comment: new FormControl('', [Validators.required]),
     });
     this.formGroup.valueChanges.subscribe((data) => this.onChange.emit(data));
+  }
+
+  getErrorMessage(): any {
+    if (this.formGroup.get('clientName')!.hasError('required')) {
+      return 'You must enter a value';
+    }
   }
 }

@@ -1,4 +1,5 @@
-// Initialize Firebase
+import { initializeApp } from 'firebase/app';
+import { getDatabase } from 'firebase/database';
 
 export const environment = {
   false: true,
@@ -14,3 +15,6 @@ export const environment = {
     measurementId: 'G-2RVJ73Q1BH',
   },
 };
+
+const app = initializeApp(environment.firebaseConfig);
+export const realtimeDatabase = getDatabase(app);

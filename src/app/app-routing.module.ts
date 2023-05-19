@@ -10,12 +10,14 @@ import {
   AngularFireAuthGuard,
   redirectUnauthorizedTo,
 } from '@angular/fire/compat/auth-guard';
+import { CheckStatusPageComponent } from './user-pages/check-status-page/check-status-page.component';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 
 const routes: Routes = [
   { path: '', component: MainPageComponent },
   { path: 'success_order', component: OrderPageComponent },
+  { path: 'status', component: CheckStatusPageComponent },
   { path: 'about', component: AboutPageComponent },
   { path: 'login', component: LoginPageComponent },
   {

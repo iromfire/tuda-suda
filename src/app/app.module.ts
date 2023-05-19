@@ -31,9 +31,9 @@ import { LoginPageComponent } from './admin-pages/login-page/login-page.componen
 import { AuthService } from './services/auth.service';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { environment } from '../environments/environment';
-
 import { AngularFireAuthGuardModule } from '@angular/fire/compat/auth-guard';
 import { MatSelectModule } from '@angular/material/select';
+import { CheckStatusPageComponent } from './user-pages/check-status-page/check-status-page.component';
 
 registerLocaleData(localeRu, 'ru');
 
@@ -53,6 +53,7 @@ const mapConfig: YaConfig = {
     ListOrdersPageComponent,
     AboutPageComponent,
     LoginPageComponent,
+    CheckStatusPageComponent,
   ],
   imports: [
     BrowserModule,

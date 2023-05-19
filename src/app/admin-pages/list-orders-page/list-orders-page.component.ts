@@ -16,8 +16,8 @@ import { OrderService } from '../../services/order.service';
 export class ListOrdersPageComponent implements OnInit, OnDestroy {
   orderStatuses = Object.values(OrderStatus);
   orderStatus!: OrderStatus;
-  orders: Order[] = [];
   order!: Order;
+  orders: Order[] = [];
   subscribe!: Subscription;
   dataSource!: MatTableDataSource<Order>;
   displayedColumns: string[] = [

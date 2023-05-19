@@ -3,28 +3,44 @@
 
   <mat-form-field [lang]="'RU'" appearance="fill" class="mat-form">
     <mat-label>Выберите дату</mat-label>
-    <input formControlName="date" matInput [matDatepicker]="picker">
+    <input formControlName="date" [min]="minDate" matInput>
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
+    <mat-error
+      *ngIf="formGroup.get('date')!.invalid && formGroup.get('date')!.touched">
+      Введите дату
+    </mat-error>
   </mat-form-field>
 
   <h2>Введите время</h2>
   <mat-form-field class="mat-form">
     <input type="time"  formControlName="time" matInput placeholder="Введите время">
+    <mat-error
+      *ngIf="formGroup.get('time')!.invalid && formGroup.get('time')!.touched">
+      Введите время
+    </mat-error>
   </mat-form-field>
 
   <h2>Введите имя</h2>
   <mat-form-field class="mat-form">
-    <input type="text" formControlName="clientName" matInput  placeholder="Введите имя">
+    <input type="text" formControlName="clientName" matInput placeholder="Введите имя" maxlength="20" required>
+    <mat-error
+      *ngIf="formGroup.get('clientName')!.invalid && formGroup.get('clientName')!.touched">
+      Введите имя
+    </mat-error>
   </mat-form-field>
 
   <h2>Введите номер телефона</h2>
   <mat-form-field class="mat-form">
     <input formControlName="phoneNumber" matInput type="text" placeholder="Введите номер телефона" prefix="+7" mask='(000) 000-00-00'>
+    <mat-error
+      *ngIf="formGroup.get('phoneNumber')!.invalid && formGroup.get('phoneNumber')!.touched">
+      Введите номер телефона
+    </mat-error>
   </mat-form-field>
 
   <h2>Комментарий</h2>
-  <mat-form-field class="mat-form">
-    <input formControlName="comment" matInput placeholder="Введите комментарий">
+  <mat-form-field class="mat-form" >
+    <input formControlName="comment" maxlength="100" matInput placeholder="Введите комментарий">
   </mat-form-field>
 </div>

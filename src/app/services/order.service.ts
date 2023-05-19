@@ -14,8 +14,6 @@ export class OrderService {
         `${environment.firebaseConfig.databaseURL}/orders/${id}.json`,
         order
       )
-      .subscribe(() => {
-        console.log(order);
-      });
+      .subscribe(() => {});
   }
 }

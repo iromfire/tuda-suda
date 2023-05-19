@@ -1,16 +1,22 @@
 <div [formGroup]="formGroup" class="wrapper">
   <h2>Введите номер заказа</h2>
   <mat-form-field class="mat-form">
-    <input type="text" formControlName="orderNumber" matInput placeholder="Введите номер заказа" >
+    <input
+      type="text"
+      formControlName="orderNumber"
+      matInput
+      placeholder="Введите номер заказа"
+    />
   </mat-form-field>
   <div>
-    <button mat-raised-button color="accent" (click)="check()">Узнать статус</button>
+    <button mat-raised-button color="accent" (click)="check()">
+      Узнать статус
+    </button>
   </div>
   <div *ngIf="checkSubmit">
     <div *ngIf="status">
-      <h2 >Статус: {{status}}</h2>
+      <h2>Статус: {{ status }}</h2>
     </div>
     <h2 *ngIf="errorExist && !status">Заказ не найден</h2>
   </div>
 </div>
-

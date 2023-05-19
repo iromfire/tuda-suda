@@ -14,7 +14,7 @@ import { OrderService } from '../../services/order.service';
   styleUrls: ['./list-orders-page.component.scss'],
 })
 export class ListOrdersPageComponent implements OnInit, OnDestroy {
-  orderStatuses = Object.values(OrderStatus);
+  orderStatuses: OrderStatus[] = Object.values(OrderStatus);
   orderStatus!: OrderStatus;
   order!: Order;
   orders: Order[] = [];
@@ -39,27 +39,27 @@ export class ListOrdersPageComponent implements OnInit, OnDestroy {
     private orderServ: OrderService
   ) {}
 
-  ngOnInit() {
-    this.subscribe = this.getOrders().subscribe((orders) => {
+  ngOnInit(): void {
+    this.subscribe = this.getOrders().subscribe((orders: Order[]) => {
       this.orders = orders as Order[];
       this.dataSource = new MatTableDataSource(this.orders);
     });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.subscribe.unsubscribe();
   }
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
+    const filterValue: string = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  protected out() {
+  protected out(): void {
     this.auth.logout();
   }
 
-  changeStatus(id: string, status: OrderStatus) {
+  changeStatus(id: string, status: OrderStatus): void {
     this.orderStatus = status;
     this.orderServ.updateOrderStatus(id, {
       ...this.order,

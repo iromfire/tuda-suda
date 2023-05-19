@@ -1,8 +1,10 @@
 <h2 class="title">Введите адрес доставки</h2>
 
-
 <div class="map-container">
-  <ya-map [center]="[55.7870206868458,49.123043554524386]" [state]="{ controls: [] }">
+  <ya-map
+    [center]="[55.7870206868458, 49.123043554524386]"
+    [state]="{ controls: [] }"
+  >
     <ya-control
       type="RoutePanel"
       [parameters]="routePanelParameters"

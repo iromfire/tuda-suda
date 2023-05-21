@@ -1,11 +1,37 @@
-<div class="wrapper">
-  <button (click)="out()" mat-raised-button color="primary" class="out">
-    Выйти из роли администратора
-  </button>
-  <mat-form-field>
-    <mat-label>Найти</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Найти" #input />
-  </mat-form-field>
+<div class="wrapper" *ngIf="orders.length > 0; else loading">
+  <div class="table-options">
+    <mat-form-field class="search">
+      <mat-label>Найти</mat-label>
+      <input
+        matInput
+        (keyup)="applyFilter($event)"
+        placeholder="Найти"
+        #input
+      />
+    </mat-form-field>
+
+    <mat-form-field class="sort">
+      <mat-label>Сортировка</mat-label>
+      <mat-select (selectionChange)="sort($event.value)">
+        <mat-option value="Сначала ранние">Сначала ранние</mat-option>
+        <mat-option value="Сначала поздние">Сначала поздние</mat-option>
+        <mat-option value="Сначала дешевые">Сначала дешевые</mat-option>
+        <mat-option value="Сначала дорогие">Сначала дорогие</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="filter">
+      <mat-label>Фильтр по статусу</mat-label>
+      <mat-select (selectionChange)="statusFilter($event.value)">
+        <mat-option *ngFor="let status of orderStatuses" [value]="status">
+          {{ status }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button (click)="out()" mat-raised-button class="out">
+      Выйти из роли администратора
+    </button>
+  </div>
 
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="id">
@@ -80,13 +106,13 @@
 
     <!-- Row shown when there is no matching data. -->
     <tr class="mat-row" *matNoDataRow>
-      <td class="mat-cell" colspan="10">
-        Нет данных по запросу "{{ input.value }}"
-      </td>
+      <td class="mat-cell" colspan="10">Нет данных по запросу</td>
     </tr>
   </table>
-
-  <footer>
-    <div class="footer"></div>
-  </footer>
 </div>
+
+<ng-template #loading>
+  <div class="wrapper">
+    <h2>Загрузка...</h2>
+  </div>
+</ng-template>

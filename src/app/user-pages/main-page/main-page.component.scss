@@ -1,21 +1,18 @@
 .wrapper {
-  width: 1400px;
-  margin: 0 auto;
   display: flex;
 }
 
 .column {
   display: block;
   padding: 2rem;
+  p {
+    color: red;
+    margin-top: 1rem;
+  }
 }
 
 .title {
   width: 100%;
   padding-bottom: 1rem;
   margin: 0;
-}
-
-p {
-  color: red;
-  margin-top: 1rem;
 }

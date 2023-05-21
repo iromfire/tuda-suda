@@ -1,6 +1,5 @@
 .wrapper {
-  width: 99%;
-  margin: 0 auto;
+  padding: 2rem;
 }
 
 table {
@@ -12,15 +11,22 @@ table {
   width: 100%;
 }
 
-.out{
-  margin-bottom: 1rem;
-}
-
-.footer {
-  height: 50px;
-}
-
-.status-field{
+.status-field {
   width: 150px;
 }
 
+.table-options {
+  display: flex;
+}
+
+.sort,
+.search,
+.filter {
+  width: 25%;
+  margin-right: 1rem;
+}
+
+.out {
+  width: 25%;
+  height: 55px;
+}

@@ -4,7 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-main-form',
   templateUrl: 'main-form.component.html',
-  styleUrls: ['main-form.component.css'],
+  styleUrls: ['main-form.component.scss'],
 })
 export class MainFormComponent {
   @Output()
@@ -29,11 +29,5 @@ export class MainFormComponent {
       comment: new FormControl('', [Validators.required]),
     });
     this.formGroup.valueChanges.subscribe((data) => this.onChange.emit(data));
-  }
-
-  getErrorMessage(): any {
-    if (this.formGroup.get('clientName')!.hasError('required')) {
-      return 'You must enter a value';
-    }
   }
 }

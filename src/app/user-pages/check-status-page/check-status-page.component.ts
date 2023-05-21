@@ -21,9 +21,9 @@ export class CheckStatusPageComponent {
     });
   }
 
-  check() {
+  check(): void {
     this.checkSubmit = true;
-    const orderNumber = this.formGroup.get('orderNumber')!.value; // номер телефона заказа
+    const orderNumber = this.formGroup.get('orderNumber')!.value;
     this.db
       .list('orders', (ref: any) =>
         ref.orderByChild('orderNumber').equalTo(orderNumber)

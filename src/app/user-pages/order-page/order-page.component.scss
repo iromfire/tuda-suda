@@ -1,13 +1,7 @@
-div {
-  padding-top: 1rem;
-  margin: 0 auto;
-  width: 1000px;
-}
-
 h1 {
   font-size: 1.5rem;
   padding: 0;
-  margin: 0;
+  margin: 0 0 1rem 0;
 }
 
 h3 {
@@ -19,6 +13,7 @@ h3 {
 
 .order-info {
   margin: 0;
+  width: 100%;
   padding: 1rem;
   display: flex;
   float: left;
@@ -37,4 +32,8 @@ h3 {
 p {
   margin-bottom: 0.5rem;
   padding: 0;
+}
+
+.wrapper {
+  padding: 2rem;
 }

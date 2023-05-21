@@ -1,8 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { v4 as generateID } from 'uuid';
 import { environment } from '../../../environments/environment';
-import { OrderForm } from '../../../interfaces/interfaces';
+import { Order, OrderForm } from '../../../interfaces/interfaces';
 import { Router } from '@angular/router';
 import { Time } from '@angular/common';
 import { OrderStatus } from '../../../enums/enums';
@@ -13,7 +13,6 @@ import { OrderStatus } from '../../../enums/enums';
   styleUrls: ['./main-page.component.scss'],
 })
 export class MainPageComponent {
-  @ViewChild('map') map!: ymaps.Map;
   constructor(private http: HttpClient, private router: Router) {}
 
   from!: string;
@@ -27,7 +26,7 @@ export class MainPageComponent {
 
   errorExist = false;
 
-  getOrderForm(data: OrderForm) {
+  getOrderForm(data: OrderForm): void {
     this.date = data.date;
     this.time = data.time;
     this.clientName = data.clientName;
@@ -35,15 +34,15 @@ export class MainPageComponent {
     this.comment = data.comment;
   }
 
-  getAddresses(addresses: any) {
+  getAddresses(addresses: any): void {
     [this.from, this.to] = addresses;
   }
 
-  getTotal(total: number) {
+  getTotal(total: number): void {
     this.total = total;
   }
 
-  checkForm() {
+  checkForm(): boolean {
     return !!(
       this.date &&
       this.time &&
@@ -53,10 +52,10 @@ export class MainPageComponent {
     );
   }
 
-  submit() {
+  submit(): void {
     if (this.checkForm()) {
-      const uniqueId = generateID();
-      const order = {
+      const uniqueId: string = generateID();
+      const order: Order = {
         orderNumber: uniqueId,
         from: this.from,
         to: this.to,

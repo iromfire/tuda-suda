@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { map, Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Order } from '../../../interfaces/interfaces';
 import { MatTableDataSource } from '@angular/material/table';
 import { AuthService } from '../../services/auth.service';
@@ -20,6 +19,7 @@ export class ListOrdersPageComponent implements OnInit, OnDestroy {
   orders: Order[] = [];
   subscribe!: Subscription;
   dataSource!: MatTableDataSource<Order>;
+  check!: Observable<Order[]>;
   displayedColumns: string[] = [
     'id',
     'from',
@@ -40,7 +40,7 @@ export class ListOrdersPageComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.subscribe = this.getOrders().subscribe((orders: Order[]) => {
+    this.subscribe = this.orderServ.getOrders().subscribe((orders: Order[]) => {
       this.orders = orders as Order[];
       this.dataSource = new MatTableDataSource(this.orders);
     });
@@ -50,44 +50,69 @@ export class ListOrdersPageComponent implements OnInit, OnDestroy {
     this.subscribe.unsubscribe();
   }
 
-  applyFilter(event: Event) {
+  applyFilter(event: Event): void {
     const filterValue: string = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  protected out(): void {
+  out(): void {
     this.auth.logout();
+  }
+
+  sort(option: string): void {
+    let sortedOrders = [];
+    switch (option) {
+      case 'Сначала ранние': {
+        sortedOrders = this.orders.sort(
+          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+        );
+        this.dataSource = new MatTableDataSource(sortedOrders);
+        break;
+      }
+      case 'Сначала поздние': {
+        sortedOrders = this.orders.sort(
+          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+        );
+        this.dataSource = new MatTableDataSource(sortedOrders);
+        break;
+      }
+      case 'Сначала дешевые': {
+        sortedOrders = this.orders.sort((a, b) => a.total - b.total);
+        this.dataSource = new MatTableDataSource(sortedOrders);
+        break;
+      }
+      case 'Сначала дорогие': {
+        sortedOrders = this.orders.sort((a, b) => b.total - a.total);
+        this.dataSource = new MatTableDataSource(sortedOrders);
+        break;
+      }
+    }
+  }
+
+  statusFilter(status: string) {
+    const filteredOrders = this.orders.filter(
+      (order) => order.status == status
+    );
+    this.dataSource = new MatTableDataSource(filteredOrders);
   }
 
   changeStatus(id: string, status: OrderStatus): void {
     this.orderStatus = status;
-    this.orderServ.updateOrderStatus(id, {
-      ...this.order,
-      status: this.orderStatus,
-    });
+    this.orderServ
+      .updateOrderStatus(id, {
+        ...this.order,
+        status: this.orderStatus,
+      })
+      .subscribe();
   }
 
-  public deleteOrder(id: string) {
-    this.http
-      .delete(`${environment.firebaseConfig.databaseURL}/orders/${id}.json`)
-      .subscribe(() => {
-        this.orders = this.orders.filter((orders) => orders.id != id);
+  deleteOrder(id: string): void {
+    let confirmDelete = confirm('Вы действительно хотите удалить заказ?');
+    if (confirmDelete) {
+      this.orderServ.deleteOrder(id).subscribe(() => {
+        this.orders = this.orders.filter((orders: Order) => orders.id != id);
+        this.dataSource = new MatTableDataSource(this.orders);
       });
-  }
-
-  private getOrders() {
-    return this.http
-      .get(`${environment.firebaseConfig.databaseURL}/orders.json`)
-      .pipe(
-        map((res: any) => {
-          return Object.keys(res).map(
-            (key) =>
-              ({
-                ...res[key],
-                id: key,
-              } as Order)
-          );
-        })
-      );
+    }
   }
 }

@@ -13,5 +13,5 @@ export class OrderPageComponent implements OnInit {
   constructor(private router: Router) {
     this.order = router.getCurrentNavigation()!.extras.state as Order;
   }
-  ngOnInit() {}
+  ngOnInit(): void {}
 }

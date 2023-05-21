@@ -8,13 +8,18 @@ import { Router } from '@angular/router';
 export class AuthService {
   constructor(private fireAuth: AngularFireAuth, private router: Router) {}
 
-  login(email: string, password: string) {
-    this.fireAuth.signInWithEmailAndPassword(email, password).then(() => {
-      this.router.navigate(['admin/orders']).then();
-    });
+  login(email: string, password: string): void {
+    this.fireAuth
+      .signInWithEmailAndPassword(email, password)
+      .then(() => {
+        this.router.navigate(['admin/orders']).then();
+      })
+      .catch(() => {
+        alert('Данные введены неверно');
+      });
   }
 
-  logout() {
+  logout(): void {
     this.fireAuth.signOut().then(() => {
       this.router.navigate(['/login']).then();
     });

@@ -7,7 +7,7 @@
   </div>
 
   <div class="column">
-    <app-main-form (onChange)="getOrderForm($event)"> </app-main-form>
+    <app-main-form (onChange)="getOrderForm($event)"></app-main-form>
   </div>
 
   <div class="column">
@@ -15,6 +15,6 @@
     <button mat-raised-button color="accent" (click)="submit()">
       Оформить заказ
     </button>
-    <p *ngIf="errorExist">Заполните все поля</p>
+    <p *ngIf="errorExist">Заполните все обязательные поля</p>
   </div>
 </div>

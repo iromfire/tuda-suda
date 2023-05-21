@@ -2,11 +2,11 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { YaReadyEvent } from 'angular8-yandex-maps';
 
 const DELIVERY_TARIFF = 25;
-const MINIMUM_COST = 1000;
+const MINIMUM_COST = 1500;
 @Component({
   selector: 'app-map-form',
   templateUrl: './map-form.component.html',
-  styleUrls: ['./map-form.component.css'],
+  styleUrls: ['./map-form.component.scss'],
 })
 export class MapFormComponent {
   @Input()
@@ -68,6 +68,7 @@ export class MapFormComponent {
           // Вычислим стоимость доставки.
           this.total = this.calculate(Math.round(length.value / 1000));
           this.totalChange.emit(this.total);
+
           // Создадим макет содержимого балуна маршрута.
           const balloonContentLayout = event.ymaps.templateLayoutFactory
             .createClass(`

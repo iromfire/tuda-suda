@@ -2,7 +2,7 @@ import { Time } from '@angular/common';
 import { OrderStatus } from '../enums/enums';
 
 export interface Order {
-  id: string;
+  id?: string;
   orderNumber: string;
   from: string;
   to: string;

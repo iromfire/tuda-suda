@@ -18,7 +18,7 @@ export class LoginPageComponent {
     });
   }
 
-  login() {
+  login(): void {
     this.auth.login(
       this.form.get('email')!.value,
       this.form.get('password')!.value

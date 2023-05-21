@@ -1,13 +1,23 @@
-<nav class="navbar">
-  <h2 [routerLink]="'/'">туда-сюда</h2>
-  <ul>
-    <li routerLinkActive="active">
-      <a [routerLink]="['/status']">Статус заказа</a>
-    </li>
-    <li routerLinkActive="active">
-      <a [routerLink]="['/about']">О сервисе</a>
-    </li>
-  </ul>
-</nav>
+<div class="container">
+  <nav class="navbar">
+    <h2 [routerLink]="'/'">туда-сюда</h2>
+    <ul>
+      <li routerLinkActive="active">
+        <a [routerLink]="['/status']">Статус заказа</a>
+      </li>
+      <li routerLinkActive="active">
+        <a [routerLink]="['/about']">О сервисе</a>
+      </li>
+    </ul>
+  </nav>
 
-<router-outlet></router-outlet>
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer>
+    <div>
+      <h3>© Туда-Сюда | Казань | 2023</h3>
+    </div>
+  </footer>
+</div>

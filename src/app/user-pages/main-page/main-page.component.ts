@@ -6,6 +6,7 @@ import { Order, OrderForm } from '../../../interfaces/interfaces';
 import { Router } from '@angular/router';
 import { Time } from '@angular/common';
 import { OrderLoader, OrderStatus } from '../../../enums/enums';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-main-page',
@@ -13,8 +14,7 @@ import { OrderLoader, OrderStatus } from '../../../enums/enums';
   styleUrls: ['./main-page.component.scss'],
 })
 export class MainPageComponent {
-  constructor(private http: HttpClient, private router: Router) {}
-
+  formGroup: FormGroup;
   from!: string;
   to!: string;
   date!: Date;
@@ -28,6 +28,12 @@ export class MainPageComponent {
   loader!: string;
 
   errorExist = false;
+
+  constructor(private http: HttpClient, private router: Router) {
+    this.formGroup = new FormGroup({
+      email: new FormControl('', [Validators.required, Validators.email]),
+    });
+  }
 
   changeLoader(loader: string) {
     this.totalWithLoaders = this.total;
@@ -99,9 +105,10 @@ export class MainPageComponent {
         clientName: this.clientName,
         phoneNumber: this.phoneNumber,
         comment: this.comment,
+        email: this.formGroup.value.email,
+        loader: this.loader,
         total: this.totalWithLoaders,
         status: OrderStatus.inProcessing,
-        loader: this.loader,
       };
 
       this.http

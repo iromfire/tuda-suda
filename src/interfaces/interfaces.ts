@@ -12,9 +12,10 @@ export interface Order {
   clientName: string;
   phoneNumber: string;
   comment: string;
+  email: string;
+  loader: string;
   total: number;
   status: OrderStatus;
-  loader: string;
 }
 
 export interface OrderForm {

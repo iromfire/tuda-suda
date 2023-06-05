@@ -28,6 +28,7 @@ export class ListOrdersPageComponent implements OnInit, OnDestroy {
     'date',
     'clientName',
     'phoneNumber',
+    'email',
     'comment',
     'total',
     'loader',
@@ -65,8 +66,7 @@ export class ListOrdersPageComponent implements OnInit, OnDestroy {
     let sortedOrders = [];
     switch (option) {
       case 'Очистить сортировку': {
-        sortedOrders = this.orders;
-        this.dataSource = new MatTableDataSource(sortedOrders);
+        this.ngOnInit();
         break;
       }
       case 'Сначала ранние': {

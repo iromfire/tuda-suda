@@ -25,6 +25,26 @@
       </mat-select>
     </mat-form-field>
 
+    <div [formGroup]="formGroup">
+      <h2>Введите email</h2>
+      <mat-form-field>
+        <input
+          type="email"
+          formControlName="email"
+          matInput
+          placeholder="Введите email*"
+          maxlength="20"
+          required
+        />
+        <mat-error *ngIf="formGroup.get('email')!.errors!['required']">
+          Введите email
+        </mat-error>
+        <mat-error *ngIf="formGroup.get('email')!.errors!['email']">
+          Введите корректный email
+        </mat-error>
+      </mat-form-field>
+    </div>
+
     <div>
       <h2>Итого: {{ totalWithLoaders }}</h2>
       <button mat-raised-button color="accent" (click)="submit()">

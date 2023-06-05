@@ -31,7 +31,7 @@ export class CheckStatusPageComponent {
       .valueChanges()
       .subscribe((orders: any[]) => {
         if (orders.length > 0) {
-          const orderId = Object.keys(orders[0])[8];
+          const orderId = Object.keys(orders[0])[9];
           this.status = orders[0][orderId];
         } else {
           this.errorExist = true;

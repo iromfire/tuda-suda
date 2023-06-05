@@ -21,7 +21,8 @@ export class ListOrdersPageComponent implements OnInit, OnDestroy {
   dataSource!: MatTableDataSource<Order>;
   check!: Observable<Order[]>;
   displayedColumns: string[] = [
-    'id',
+    'dateOrder',
+    'orderNumber',
     'from',
     'to',
     'date',
@@ -29,6 +30,7 @@ export class ListOrdersPageComponent implements OnInit, OnDestroy {
     'phoneNumber',
     'comment',
     'total',
+    'loader',
     'status',
     'delete',
   ];
@@ -62,6 +64,11 @@ export class ListOrdersPageComponent implements OnInit, OnDestroy {
   sort(option: string): void {
     let sortedOrders = [];
     switch (option) {
+      case 'Очистить сортировку': {
+        sortedOrders = this.orders;
+        this.dataSource = new MatTableDataSource(sortedOrders);
+        break;
+      }
       case 'Сначала ранние': {
         sortedOrders = this.orders.sort(
           (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
@@ -90,9 +97,10 @@ export class ListOrdersPageComponent implements OnInit, OnDestroy {
   }
 
   statusFilter(status: string) {
-    const filteredOrders = this.orders.filter(
-      (order) => order.status == status
-    );
+    let filteredOrders = this.orders.filter((order) => order.status == status);
+    if (status === 'Очистить фильтрацию') {
+      filteredOrders = this.orders;
+    }
     this.dataSource = new MatTableDataSource(filteredOrders);
   }
 

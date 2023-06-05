@@ -6,3 +6,10 @@ export enum OrderStatus {
   delivered = 'Доставлен',
   cancelled = 'Отменен',
 }
+
+export enum OrderLoader {
+  no = 'Не требуется',
+  one = 'Один',
+  two = 'Два',
+  three = 'Три',
+}

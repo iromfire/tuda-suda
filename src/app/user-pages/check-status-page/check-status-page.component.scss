@@ -1,5 +1,6 @@
 .wrapper {
-  padding: 2rem;
+  padding: 2rem 0;
+  overflow: hidden;
 }
 
 p {
@@ -8,7 +9,9 @@ p {
 }
 
 mat-form-field {
-  width: 100%;
+  min-width: 1500px;
+
+  box-sizing: content-box;
 }
 
 button {

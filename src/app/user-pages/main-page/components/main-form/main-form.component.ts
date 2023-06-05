@@ -11,16 +11,11 @@ export class MainFormComponent {
   onChange = new EventEmitter();
 
   minDate: Date;
-  minTime: string;
 
   formGroup: FormGroup;
   constructor() {
     this.minDate = new Date();
-    this.minTime =
-      this.minDate.getHours().toString() +
-      ':' +
-      this.minDate.getMinutes().toString();
-    console.log(this.minTime);
+
     this.formGroup = new FormGroup({
       date: new FormControl('', [Validators.required]),
       time: new FormControl('', Validators.required),

@@ -11,10 +11,26 @@
   </div>
 
   <div class="column">
-    <h2>Итого: {{ total }}</h2>
-    <button mat-raised-button color="accent" (click)="submit()">
-      Оформить заказ
-    </button>
-    <p *ngIf="errorExist">Заполните все обязательные поля</p>
+    <h2>Грузчики</h2>
+    <mat-form-field appearance="fill" class="status-field">
+      <mat-label>Количество грузчиков</mat-label>
+      <mat-select
+        (selectionChange)="changeLoader($event.value)"
+        [disabled]="total === undefined"
+        required
+      >
+        <mat-option *ngFor="let loader of orderLoader" [value]="loader">
+          {{ loader }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div>
+      <h2>Итого: {{ totalWithLoaders }}</h2>
+      <button mat-raised-button color="accent" (click)="submit()">
+        Оформить заказ
+      </button>
+      <p *ngIf="errorExist">Заполните все обязательные поля</p>
+    </div>
   </div>
 </div>

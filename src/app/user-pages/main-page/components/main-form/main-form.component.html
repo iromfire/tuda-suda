@@ -7,6 +7,7 @@
       [min]="minDate"
       matInput
       [matDatepicker]="picker"
+      required
     />
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
@@ -19,7 +20,13 @@
 
   <h2>Введите время</h2>
   <mat-form-field class="mat-form">
-    <input type="time" formControlName="time" matInput class="timepicker" />
+    <input
+      type="time"
+      formControlName="time"
+      matInput
+      class="timepicker"
+      required
+    />
     <mat-error
       *ngIf="formGroup.get('time')!.invalid && formGroup.get('time')!.touched"
     >
@@ -56,6 +63,7 @@
       placeholder="Введите номер телефона*"
       [prefix]="formGroup.get('phoneNumber')!.value ? '+7' : ''"
       mask="(000) 000-00-00"
+      required
     />
     <mat-error
       *ngIf="
@@ -74,6 +82,7 @@
       maxlength="100"
       matInput
       placeholder="Введите комментарий"
+      required
     />
   </mat-form-field>
 </div>

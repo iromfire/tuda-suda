@@ -53,14 +53,12 @@ footer {
   margin: 0 auto;
   background: whitesmoke;
   color: grey;
-  padding: 0.7rem 2rem;
-  div {
-    width: 1400px;
-    display: flex;
-    h3 {
-      margin: 0 auto;
-      padding: 0;
-    }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 3rem;
+  h3 {
+    margin: auto;
   }
 }
 

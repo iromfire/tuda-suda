@@ -4,6 +4,7 @@
 
 table {
   width: 100%;
+  table-layout: auto;
 }
 
 .mat-mdc-form-field {
@@ -30,4 +31,10 @@ table {
 .out {
   width: 25%;
   height: 55px;
+}
+
+table,
+th,
+td {
+  font-size: 0.75rem;
 }

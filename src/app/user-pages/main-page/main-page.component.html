@@ -1,4 +1,4 @@
-<div class="wrapper">
+<div class="wrapper" [formGroup]="formGroup" (ngSubmit)="submit()">
   <div class="column">
     <app-map-form
       (totalChange)="getTotal($event)"
@@ -6,51 +6,128 @@
     ></app-map-form>
   </div>
 
-  <div class="column">
-    <app-main-form (onChange)="getOrderForm($event)"></app-main-form>
+  <div class="column" [formGroup]="formGroup">
+    <h2>Выберите дату</h2>
+    <mat-form-field [lang]="'RU'" appearance="fill" class="mat-form">
+      <mat-label>Выберите дату</mat-label>
+      <input
+        formControlName="date"
+        [min]="minDate"
+        matInput
+        [matDatepicker]="picker"
+        required
+      />
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error
+        *ngIf="formGroup.get('date')!.invalid && formGroup.get('date')!.touched"
+      >
+        Выберите дату
+      </mat-error>
+    </mat-form-field>
+
+    <h2>Введите время</h2>
+    <mat-form-field class="mat-form">
+      <input type="time" formControlName="time" matInput class="timepicker" />
+      <mat-error
+        *ngIf="formGroup.get('time')!.invalid && formGroup.get('time')!.touched"
+      >
+        Введите время
+      </mat-error>
+    </mat-form-field>
+
+    <h2>Введите имя</h2>
+    <mat-form-field class="mat-form">
+      <input
+        type="text"
+        formControlName="clientName"
+        matInput
+        placeholder="Введите имя*"
+        maxlength="20"
+      />
+      <mat-error
+        *ngIf="
+          formGroup.get('clientName')!.invalid &&
+          formGroup.get('clientName')!.touched
+        "
+      >
+        Введите имя
+      </mat-error>
+    </mat-form-field>
+
+    <h2>Введите номер телефона</h2>
+    <mat-form-field class="mat-form">
+      <input
+        formControlName="phoneNumber"
+        matInput
+        type="text"
+        placeholder="Введите номер телефона*"
+        prefix="+7"
+        mask="(000) 000-00-00"
+      />
+      <mat-error
+        *ngIf="
+          formGroup.get('phoneNumber')!.invalid &&
+          formGroup.get('phoneNumber')!.touched
+        "
+      >
+        Введите номер телефона
+      </mat-error>
+    </mat-form-field>
+
+    <h2>Комментарий</h2>
+    <mat-form-field class="mat-form">
+      <input
+        formControlName="comment"
+        maxlength="100"
+        matInput
+        placeholder="Введите комментарий"
+      />
+    </mat-form-field>
   </div>
 
-  <div class="column">
+  <div class="column" [formGroup]="formGroup">
+    <h2>Email</h2>
+    <mat-form-field class="mat-form">
+      <input formControlName="email" matInput placeholder="Введите email" />
+      <mat-error
+        *ngIf="
+          formGroup.get('email')!.invalid && formGroup.get('email')!.touched
+        "
+      >
+        Введите корректный email
+      </mat-error>
+    </mat-form-field>
+
     <h2>Грузчики</h2>
     <mat-form-field appearance="fill" class="status-field">
       <mat-label>Количество грузчиков</mat-label>
       <mat-select
+        formControlName="loader"
         (selectionChange)="changeLoader($event.value)"
-        [disabled]="total === undefined"
-        required
       >
-        <mat-option *ngFor="let loader of orderLoader" [value]="loader">
+        <mat-option
+          *ngFor="let loader of orderLoader"
+          [value]="loader"
+          [disabled]="total === undefined"
+        >
           {{ loader }}
         </mat-option>
       </mat-select>
     </mat-form-field>
 
-    <div [formGroup]="formGroup">
-      <h2>Введите email</h2>
-      <mat-form-field>
-        <input
-          type="email"
-          formControlName="email"
-          matInput
-          placeholder="Введите email*"
-          maxlength="20"
-          required
-        />
-        <mat-error *ngIf="formGroup.get('email')!.errors!['required']">
-          Введите email
-        </mat-error>
-        <mat-error *ngIf="formGroup.get('email')!.errors!['email']">
-          Введите корректный email
-        </mat-error>
-      </mat-form-field>
-    </div>
-
-    <div>
-      <h2>Итого: {{ totalWithLoaders }}</h2>
-      <button mat-raised-button color="accent" (click)="submit()">
-        Оформить заказ
-      </button>
-      <p *ngIf="errorExist">Заполните все обязательные поля</p>
-    </div>
+    <h2>Итого: {{ totalWithLoaders }}</h2>
+    <button
+      mat-raised-button
+      color="accent"
+      (click)="submit()"
+      type="submit"
+      [disabled]="formGroup.invalid || total === undefined"
+    >
+      Оформить заказ
+    </button>
   </div>
 </div>

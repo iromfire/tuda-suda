@@ -18,7 +18,7 @@ import { OrderPageComponent } from './user-pages/order-page/order-page.component
 import { NotFoundPageComponent } from './user-pages/not-found-page/not-found-page.component';
 import { MainPageComponent } from './user-pages/main-page/main-page.component';
 import { NgOptimizedImage } from '@angular/common';
-import { MainFormComponent } from './user-pages/main-page/components/main-form/main-form.component';
+
 import { MapFormComponent } from './user-pages/main-page/components/map-form/map-form.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ListOrdersPageComponent } from './admin-pages/list-orders-page/list-orders-page.component';
@@ -48,7 +48,6 @@ const mapConfig: YaConfig = {
     OrderPageComponent,
     NotFoundPageComponent,
     MainPageComponent,
-    MainFormComponent,
     MapFormComponent,
     ListOrdersPageComponent,
     AboutPageComponent,

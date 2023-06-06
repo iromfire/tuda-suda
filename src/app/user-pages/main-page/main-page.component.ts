@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { Time } from '@angular/common';
 import { OrderLoader, OrderStatus } from '../../../enums/enums';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { OrderService } from '../../services/order.service';
 
 @Component({
   selector: 'app-main-page',
@@ -15,23 +16,33 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class MainPageComponent {
   formGroup: FormGroup;
+
   from!: string;
   to!: string;
-  date!: Date;
-  clientName!: string;
-  phoneNumber!: string;
-  comment!: string;
+
   total!: number;
   totalWithLoaders!: number;
-  time!: Time;
+
   orderLoader: string[] = Object.values(OrderLoader);
-  loader!: string;
+  minDate: Date;
 
-  errorExist = false;
-
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private orderServ: OrderService
+  ) {
+    this.minDate = new Date();
     this.formGroup = new FormGroup({
+      date: new FormControl('', Validators.required),
+      time: new FormControl('', Validators.required),
+      clientName: new FormControl('', Validators.required),
+      phoneNumber: new FormControl('', [
+        Validators.required,
+        Validators.minLength(10),
+      ]),
+      comment: new FormControl(''),
       email: new FormControl('', [Validators.required, Validators.email]),
+      loader: new FormControl('', Validators.required),
     });
   }
 
@@ -41,33 +52,21 @@ export class MainPageComponent {
       switch (loader) {
         case 'Один': {
           this.totalWithLoaders += 400;
-          this.loader = loader;
           break;
         }
         case 'Два': {
           this.totalWithLoaders += 800;
-          this.loader = loader;
           break;
         }
         case 'Три': {
           this.totalWithLoaders += 1200;
-          this.loader = loader;
           break;
         }
         case 'Не требуется': {
-          this.loader = loader;
           break;
         }
       }
     }
-  }
-
-  getOrderForm(data: OrderForm): void {
-    this.date = data.date;
-    this.time = data.time;
-    this.clientName = data.clientName;
-    this.phoneNumber = data.phoneNumber;
-    this.comment = data.comment;
   }
 
   getAddresses(addresses: any): void {
@@ -79,45 +78,36 @@ export class MainPageComponent {
     this.totalWithLoaders = this.total;
   }
 
-  checkForm(): boolean {
-    return !!(
-      this.from &&
-      this.to &&
-      this.date &&
-      this.time &&
-      this.clientName &&
-      this.phoneNumber &&
-      this.total &&
-      this.loader
-    );
-  }
-
   submit(): void {
-    if (this.checkForm()) {
-      const uniqueId: string = generateID();
-      const order: Order = {
-        dateOrder: new Date(),
-        orderNumber: uniqueId,
-        from: this.from,
-        to: this.to,
-        date: this.date,
-        time: this.time,
-        clientName: this.clientName,
-        phoneNumber: this.phoneNumber,
-        comment: this.comment,
-        email: this.formGroup.value.email,
-        loader: this.loader,
-        total: this.totalWithLoaders,
-        status: OrderStatus.inProcessing,
-      };
-
-      this.http
-        .post(`${environment.firebaseConfig.databaseURL}/orders.json`, order)
-        .subscribe(() => {
-          this.router.navigateByUrl('/success_order', { state: order }).then();
-        });
-    } else {
-      this.errorExist = true;
-    }
+    const uniqueId: string = generateID();
+    const order: Order = {
+      dateOrder: new Date(),
+      orderNumber: uniqueId,
+      from: this.from,
+      to: this.to,
+      date: this.formGroup.value.date,
+      time: this.formGroup.value.time,
+      clientName: this.formGroup.value.clientName,
+      phoneNumber: this.formGroup.value.phoneNumber,
+      comment: this.formGroup.value.comment,
+      email: this.formGroup.value.email,
+      loader: this.formGroup.value.loader,
+      total: this.totalWithLoaders,
+      status: OrderStatus.inProcessing,
+    };
+    this.http
+      .post(`${environment.firebaseConfig.databaseURL}/orders.json`, order)
+      .subscribe(() => {
+        this.orderServ.sendEmailOrderNumber(
+          order.orderNumber,
+          order.email,
+          order.total,
+          order.from,
+          order.to,
+          order.date.toLocaleDateString('ru-RU'),
+          order.time
+        );
+        this.router.navigateByUrl('/success_order', { state: order }).then();
+      });
   }
 }

@@ -21,7 +21,7 @@ export class AuthService {
 
   logout(): void {
     this.fireAuth.signOut().then(() => {
-      this.router.navigate(['/login']).then();
+      this.router.navigate(['/admin/login']).then();
     });
   }
 }
